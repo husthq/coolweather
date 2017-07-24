@@ -86,10 +86,10 @@ public class ChooseAreaFragment extends Fragment {
                         startActivity(intent);
                         getActivity().finish();
                     } else if (getActivity() instanceof WeatherActivity) {
-                            WeatherActivity activity=(WeatherActivity)getActivity();
-                            activity.drawerLayout.closeDrawers();
-                            activity.swipeRefresh.setRefreshing(true);
-                            activity.requestWeather(weatherId);
+                        WeatherActivity activity = (WeatherActivity) getActivity();
+                        activity.drawerLayout.closeDrawers();
+                        activity.swipeRefresh.setRefreshing(true);
+                        activity.requestWeather(weatherId);
                     }
 
                 }
@@ -128,25 +128,25 @@ public class ChooseAreaFragment extends Fragment {
     }
 
     private void queryCities() {
-        {
-            titleText.setText(selectedProvince.getProvinceName());
-            backButton.setVisibility(View.VISIBLE);
-            cityList = DataSupport.where("provinceid=?", String.valueOf(selectedProvince.getId())).find(City.class);
-            if (cityList.size() > 0) {
-                dataList.clear();
-                for (City city : cityList) {
-                    dataList.add(city.getCityName());
-                }
-                adapter.notifyDataSetChanged();
-                listView.setSelection(0);
-                currentLevel = LEVEL_CITY;
-            } else {
-                int provinceCode = selectedProvince.getProvinceCode();
-                String address = "http://guolin.tech/api/china/" + provinceCode;
-                queryFromServer(address, "city");
-            }
 
+        titleText.setText(selectedProvince.getProvinceName());
+        backButton.setVisibility(View.VISIBLE);
+        cityList = DataSupport.where("provinceid=?", String.valueOf(selectedProvince.getId())).find(City.class);
+        if (cityList.size() > 0) {
+            dataList.clear();
+            for (City city : cityList) {
+                dataList.add(city.getCityName());
+            }
+            adapter.notifyDataSetChanged();
+            listView.setSelection(0);
+            currentLevel = LEVEL_CITY;
+        } else {
+            int provinceCode = selectedProvince.getProvinceCode();
+            String address = "http://guolin.tech/api/china/" + provinceCode;
+            queryFromServer(address, "city");
         }
+
+
     }
 
     private void queryCounties() {
